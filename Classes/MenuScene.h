@@ -2,15 +2,20 @@
 // Created by 35691 on 7/8/2023.
 //
 
-#ifndef RUNNER_MENUSCENE_H
-#define RUNNER_MENUSCENE_H
+#pragma once
+#include "cocos2d.h"
 
+class MenuScene : public cocos2d::Scene
+{
+    static cocos2d::Scene* createScene();
 
+    virtual bool init();
 
-class MenuScene {
+    void exitCallback(cocos2d::Ref* pSender);
 
+    void startCallback(cocos2d::Ref* pSender);
+
+    void settingCallback(cocos2d::Ref* pSender);
+
+    CREATE_FUNC(MenuScene);
 };
-
-
-
-#endif //RUNNER_MENUSCENE_H
