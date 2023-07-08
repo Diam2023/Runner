@@ -29,10 +29,38 @@ set(APP_NAME Runner)
 
 project(${APP_NAME})
 
-if(NOT DEFINED ENV{COCOS_HOME})
-    # 必須先定義Cocos路徑
-    message(FATAL_ERROR "Cocos Env{COCOS_HOME} Not Define!!! Please Read README.MD!")
+set(BUILD_MESSAGE_TAG "${APP_NAME} BUILD: ")
+
+function(appBuildLog l m)
+    if (l STREQUAL e)
+        message(FATAL_ERROR ${BUILD_MESSAGE_TAG} ${m})
+    else()
+        message(${BUILD_MESSAGE_TAG} ${m})
+    endif()
+endfunction()
+
+if (DEFINED CMAKE_BUILD_TYPE)
+    if (CMAKE_BUILD_TYPE STREQUAL Debug)
+        appBuildLog("i" "Debug Mode!")
+        add_definitions(-DCOCOS2D_DEBUG=2)
+    elseif(CMAKE_BUILD_TYPE STREQUAL Release)
+        appBuildLog("d" "Relase Mode!")
+        add_definitions(-DCOCOS2D_DEBUG=0)
+    endif()
 endif()
+
+if (NOT DEFINED ENV{COCOS_HOME})
+    # 必須先定義Cocos路徑
+    appBuildLog("e" "Cocos Env{COCOS_HOME} Not Define!!! Please Read README.MD!")
+else()
+    if (EXISTS $ENV{COCOS_HOME} AND EXISTS $ENV{COCOS_HOME}/cocos AND EXISTS $ENV{COCOS_HOME}/cmake)
+        appBuildLog("i" "Find COCOS_HOME With '$ENV{COCOS_HOME}'")
+    elseif()
+        appBuildLog("i" "Cocos Path Error '$ENV{COCOS_HOME}', Has Not Cmake And cocos source code! ")
+    endif()
+endif()
+
+
 
 # 使用GLVND
 if (NOT DEFINED OpenGL_GL_PREFERENCE)
