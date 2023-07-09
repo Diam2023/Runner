@@ -7,15 +7,19 @@
 
 class MenuScene : public cocos2d::Scene
 {
+
+  protected:
+    cocos2d::Size visibleSize;
+  public:
     static cocos2d::Scene* createScene();
 
-    virtual bool init();
-
-    void exitCallback(cocos2d::Ref* pSender);
+    bool init() override;
 
     void startCallback(cocos2d::Ref* pSender);
 
     void settingCallback(cocos2d::Ref* pSender);
+
+    void exitCallback(cocos2d::Ref* pSender);
 
     CREATE_FUNC(MenuScene);
 };
