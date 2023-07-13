@@ -1,16 +1,20 @@
 //
 // Created by 35691 on 7/10/2023.
 //
-
-#ifndef RUNNER_GAMESCENE_H
-#define RUNNER_GAMESCENE_H
+#pragma once
 
 
+#include "cocos2d.h"
 
-class GameScene {
+
+
+class GameScene : public cocos2d::Scene
+{
+  public:
+    static cocos2d::Scene* createScene();
+
+    bool init() override;
+
+    CREATE_FUNC(GameScene);
 
 };
-
-
-
-#endif //RUNNER_GAMESCENE_H

@@ -52,9 +52,9 @@ endif()
 
 
 
-# 使用GLVND
+# 使用LEGACY
 if (NOT DEFINED OpenGL_GL_PREFERENCE)
-    set(OpenGL_GL_PREFERENCE GLVND)
+    set(OpenGL_GL_PREFERENCE LEGACY)
 endif()
 
 if(XCODE)

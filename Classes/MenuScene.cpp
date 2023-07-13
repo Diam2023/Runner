@@ -3,9 +3,11 @@
 //
 
 #include "MenuScene.h"
+
+#include "GameScene.h"
 #include <string>
 
-using namespace cocos2d;
+USING_NS_CC;
 
 cocos2d::Scene* MenuScene::createScene()
 {
@@ -75,11 +77,10 @@ bool MenuScene::init()
 
 void MenuScene::startCallback(cocos2d::Ref* pSender)
 {
-
     CCLOGINFO("MenuScene Exit");
 
-    // Lunch GameScene
-    // Director::getInstance()->replaceScene()
+    // Replace GameScene
+    Director::getInstance()->replaceScene(GameScene::createScene());
 }
 
 void MenuScene::settingCallback(cocos2d::Ref* pSender)
