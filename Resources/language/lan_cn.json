@@ -1,0 +1,19 @@
+{
+  "AppName": "跑者",
+  "Menu": {
+    "start": "开始",
+    "setting": "设定",
+    "exit": "退出"
+  },
+  "Game": {
+    "role": "我",
+    "wall": "墙",
+    "floor": "地",
+    "Item": {
+      "speed": "速"
+    }
+  },
+  "Setting": {
+
+  }
+}
