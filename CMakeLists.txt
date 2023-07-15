@@ -29,6 +29,21 @@ set(APP_NAME Runner)
 
 project(${APP_NAME})
 
+if (MSVC_VERSION GREATER_EQUAL "1900")
+    message("Use MSVC")
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("/std:c++17" _cpp_17_flag_supported)
+    if (_cpp_17_flag_supported)
+        add_compile_options("/std:c++17")
+    endif()
+else()
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_STANDARD 17)
+endif()
+
 set(BUILD_MESSAGE_TAG "${APP_NAME} BUILD: ")
 
 function(appBuildLog l m)
@@ -83,8 +98,8 @@ if(APPLE OR WINDOWS)
 endif()
 
 # add cross-platforms source files and header files
-file(GLOB_RECURSE GAME_SOURCE "Classes/*.cc" "Classes/*.cpp")
-file(GLOB_RECURSE GAME_HEADER "Classes/*.h")
+file(GLOB_RECURSE GAME_SOURCE "Classes/*.cc" "Classes/*.cpp" "Classes/*/*.cpp")
+file(GLOB_RECURSE GAME_HEADER "Classes/*.h" "Classes/*/*.h")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
