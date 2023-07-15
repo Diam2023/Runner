@@ -1,16 +1,33 @@
 //
 // Created by 35691 on 7/14/2023.
 //
+#pragma once
 
-#ifndef RUNNER_MAJORROLE_H
-#define RUNNER_MAJORROLE_H
+#include "cocos2d.h"
 
+#include <string>
 
+class MajorRole final : public cocos2d::Sprite
+{
+  private:
 
-class majorRole {
+    /**
+     * ratio of my size
+     */
+    float sizeRatio;
 
+  public:
+    float getSizeRatio() const;
+    void setSizeRatio(float sizeRatio);
+
+  public:
+    /**
+     * Default Of Font Size
+     */
+    constexpr static const float DefaultSize = 50;
+
+    MajorRole();
+    ~MajorRole() override;
+
+    static MajorRole* create(float sizeRatio = 1);
 };
-
-
-
-#endif //RUNNER_MAJORROLE_H
