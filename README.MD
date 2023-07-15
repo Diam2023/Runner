@@ -32,6 +32,10 @@ cmake .. -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Debug -A win32
 cmake --build . --target Runner --config Debug -j 10
 ```
 
+
+## 游戲構思：
+  使用文字來描述界面
+
 ## Class Map
 - Scene
     - MenuScene : Scene
