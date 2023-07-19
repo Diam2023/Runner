@@ -37,7 +37,6 @@ cocos2d::PhysicsBody* AutoPolygonPhysicsSprite::generatePhysicsBody(
                                    physicsMaterial);
     CCASSERT(physicsBody != nullptr,
              "Null Sprite Object of Create New Image Callback!!!");
-    physicsBody->autorelease();
     CC_SAFE_DELETE_ARRAY(points);
     return physicsBody;
 }
