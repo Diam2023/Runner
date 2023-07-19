@@ -25,20 +25,32 @@ class AutoPolygonPhysicsSprite : public cocos2d::Sprite
     }
 
   public:
-
     /**
-     * constructor
+     * Use Maltreat construct
      */
-    AutoPolygonPhysicsSprite();
+    explicit AutoPolygonPhysicsSprite(
+        cocos2d::PhysicsMaterial roleMaterial =
+            cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+
     ~AutoPolygonPhysicsSprite() override;
 
     /**
-     * Create A AutoPolygonPhysicsSprite With texture and physicsMaterial
+     * init AutoPolygonPhysicsSprite With texture
      * @param texture texture of Sprite
-     * @param physicsMaterial physicsMaterial For PhysicsBody
-     * @return A new Auto Relase AutoPolygonPhysicsSprite Instance
      */
-    static AutoPolygonPhysicsSprite* create(cocos2d::Texture2D *texture, cocos2d::PhysicsMaterial physicsMaterial = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+    void init(cocos2d::Texture2D* texture);
+
+    //    /**
+    //     * Create A AutoPolygonPhysicsSprite With texture and physicsMaterial
+    //     * @tparam T_ Drive Of AutoPolygonPhysicsSprite
+    //     * @param texture texture of Sprite
+    //     * @param physicsMaterial physicsMaterial For PhysicsBody
+    //     * @return A new Auto Relase AutoPolygonPhysicsSprite Instance
+    //     */
+    //    template <typename T_>
+    //    static T_* create(cocos2d::Texture2D *texture,
+    //    cocos2d::PhysicsMaterial physicsMaterial =
+    //    cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
 
     /**
      * Create A PhysicsBody With Auto Split Polygon
@@ -47,6 +59,8 @@ class AutoPolygonPhysicsSprite : public cocos2d::Sprite
      * @param physicsMaterial material
      * @return A auto release PhysicsBody Instance
      */
-    static cocos2d::PhysicsBody* generatePhysicsBody(cocos2d::Image* image, const cocos2d::Size& contentSize, const cocos2d::PhysicsMaterial& physicsMaterial);
+    static cocos2d::PhysicsBody* generatePhysicsBody(
+        cocos2d::Image* image,
+        const cocos2d::Size& contentSize,
+        const cocos2d::PhysicsMaterial& physicsMaterial);
 };
-

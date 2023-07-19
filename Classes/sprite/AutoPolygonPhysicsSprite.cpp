@@ -6,6 +6,7 @@
 
 #include "utils/ImageAutoPolygon.h"
 #include "renderer/CCTexture2D.h"
+#include "physics/CCPhysicsShape.h"
 
 USING_NS_CC;
 
@@ -34,14 +35,14 @@ cocos2d::PhysicsBody* AutoPolygonPhysicsSprite::generatePhysicsBody(
         PhysicsBody::createPolygon(points,
                                    static_cast<int>(triangles.indexCount),
                                    physicsMaterial);
-    CCASSERT(physicsBody == nullptr,
+    CCASSERT(physicsBody != nullptr,
              "Null Sprite Object of Create New Image Callback!!!");
     physicsBody->autorelease();
     CC_SAFE_DELETE_ARRAY(points);
     return physicsBody;
 }
 
-AutoPolygonPhysicsSprite::AutoPolygonPhysicsSprite() : roleMaterial()
+AutoPolygonPhysicsSprite::AutoPolygonPhysicsSprite(cocos2d::PhysicsMaterial roleMaterial) : roleMaterial(roleMaterial)
 {
     CCLOGINFO("AutoPolygonPhysicsSprite Create!");
 }
@@ -50,15 +51,13 @@ AutoPolygonPhysicsSprite::~AutoPolygonPhysicsSprite()
 {
     CCLOGINFO("AutoPolygonPhysicsSprite Destroy!");
 }
-AutoPolygonPhysicsSprite* AutoPolygonPhysicsSprite::create(
-    cocos2d::Texture2D* texture,
-    cocos2d::PhysicsMaterial physicsMaterial)
+
+void AutoPolygonPhysicsSprite::init(cocos2d::Texture2D* texture)
 {
     auto tmpSprite = new (std::nothrow) Sprite();
     if (!tmpSprite->initWithTexture(texture))
     {
         CCLOGERROR("Error Initialize TmpSprite!!!");
-        return nullptr;
     }
 
     tmpSprite->setAnchorPoint(Vec2::ZERO);
@@ -76,29 +75,75 @@ AutoPolygonPhysicsSprite* AutoPolygonPhysicsSprite::create(
     tmpSprite->visit();
     tmpRender->end();
 
-    auto sprite = new AutoPolygonPhysicsSprite();
-    CCASSERT(sprite == nullptr,
-             "Create AutoPolygonPhysicsSprite Error!!!");
-    sprite->autorelease();
-    sprite->initWithTexture(texture);
-    sprite->setRoleMaterial(physicsMaterial);
+    this->initWithTexture(texture);
 
-    tmpRender->createNewImage([sprite](Image* image) {
-        CCASSERT(image == nullptr,
+    tmpRender->createNewImage([this](Image* image) {
+        CCASSERT(image != nullptr,
                  "Null Image Object of Create New Image Callback!!!");
-        CCASSERT(sprite == nullptr,
-                 "Null Sprite Object of Create New Image Callback!!!");
 
         auto physicsBody = AutoPolygonPhysicsSprite::generatePhysicsBody(
-            image, sprite->getContentSize(), sprite->getRoleMaterial());
+            image, this->getContentSize(), this->getRoleMaterial());
 
-        sprite->setPhysicsBody(physicsBody);
-        sprite->setVisible(true);
+        this->setPhysicsBody(physicsBody);
+        this->setVisible(true);
 
         CC_SAFE_DELETE(image);
     });
 
-    sprite->setVisible(false);
-
-    return sprite;
+    this->setVisible(false);
 }
+
+//template <typename T_>
+//T_* AutoPolygonPhysicsSprite::create(cocos2d::Texture2D* texture,
+//                                     cocos2d::PhysicsMaterial physicsMaterial)
+//{
+//    static_assert((std::is_base_of_v<AutoPolygonPhysicsSprite, T_> == true) ||
+//                  (std::is_same_v<AutoPolygonPhysicsSprite, T_> == true));
+//
+//    auto tmpSprite = new (std::nothrow) Sprite();
+//    if (!tmpSprite->initWithTexture(texture))
+//    {
+//        CCLOGERROR("Error Initialize TmpSprite!!!");
+//        return nullptr;
+//    }
+//
+//    tmpSprite->setAnchorPoint(Vec2::ZERO);
+//    tmpSprite->autorelease();
+//
+//    // Create renderTexture
+//    RenderTexture* tmpRender = RenderTexture::create(
+//        static_cast<int>(tmpSprite->getContentSize().width),
+//        static_cast<int>(tmpSprite->getContentSize().height),
+//        backend::PixelFormat::RGBA8888);
+//    tmpRender->autorelease();
+//    tmpRender->setSprite(tmpSprite);
+//    tmpRender->begin();
+//    //! TODO Do not use This in Debug Draw Sprite
+//    tmpSprite->visit();
+//    tmpRender->end();
+//
+//    auto sprite = new AutoPolygonPhysicsSprite();
+//    CCASSERT(sprite == nullptr, "Create AutoPolygonPhysicsSprite Error!!!");
+//    sprite->autorelease();
+//    sprite->initWithTexture(texture);
+//    sprite->setRoleMaterial(physicsMaterial);
+//
+//    tmpRender->createNewImage([sprite](Image* image) {
+//        CCASSERT(image == nullptr,
+//                 "Null Image Object of Create New Image Callback!!!");
+//        CCASSERT(sprite == nullptr,
+//                 "Null Sprite Object of Create New Image Callback!!!");
+//
+//        auto physicsBody = AutoPolygonPhysicsSprite::generatePhysicsBody(
+//            image, sprite->getContentSize(), sprite->getRoleMaterial());
+//
+//        sprite->setPhysicsBody(physicsBody);
+//        sprite->setVisible(true);
+//
+//        CC_SAFE_DELETE(image);
+//    });
+//
+//    sprite->setVisible(false);
+//
+//    return sprite;
+//}
