@@ -9,18 +9,27 @@
 
 class MajorRole final : public cocos2d::Sprite
 {
-  private:
+  protected:
 
     /**
-     * ratio of my size
+     * Ratio of Role size
      */
     float sizeRatio;
 
+    /**
+     * Role Material
+     */
+    cocos2d::PhysicsMaterial roleMaterial;
   public:
+    // get And Setter
+    const cocos2d::PhysicsMaterial& getRoleMaterial() const;
+    void setRoleMaterial(const cocos2d::PhysicsMaterial&);
+
     float getSizeRatio() const;
-    void setSizeRatio(float sizeRatio);
+    void setSizeRatio(float);
 
   public:
+
     /**
      * Default Of Font Size
      */
@@ -29,5 +38,17 @@ class MajorRole final : public cocos2d::Sprite
     MajorRole();
     ~MajorRole() override;
 
-    static MajorRole* create(float sizeRatio = 1);
+    /**
+     * Create A Major Role
+     * @param sizeRatio
+     * @param roleMaterial
+     * @return
+     */
+    static MajorRole* create(float sizeRatio = 1, cocos2d::PhysicsMaterial roleMaterial = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+
+    /**
+     * update RoleMaterial
+     * @return
+     */
+    bool updateRoleMaterial();
 };
