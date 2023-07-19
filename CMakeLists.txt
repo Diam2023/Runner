@@ -54,6 +54,16 @@ function(appBuildLog l m)
     endif()
 endfunction()
 
+# add build type debug
+if (DEFINED CMAKE_BUILD_TYPE)
+    if (CMAKE_BUILD_TYPE STREQUAL Debug)
+#        appBuildLog("i" "Debug Draw")
+#        Do not Use It, Because debug line Will Be Written In Render Image.
+#        add_definitions(-DCC_SPRITE_DEBUG_DRAW=1)
+    endif()
+endif()
+
+
 if (NOT DEFINED ENV{COCOS_HOME})
     # 必須先定義Cocos路徑
     appBuildLog("e" "Cocos Env{COCOS_HOME} Not Define!!! Please Read README.MD!")
@@ -170,7 +180,8 @@ remove_definitions(-DCOCOS2D_DEBUG)
 if (DEFINED CMAKE_BUILD_TYPE)
     if (CMAKE_BUILD_TYPE STREQUAL Debug)
         appBuildLog("i" "Debug Mode!")
-        target_compile_definitions(${APP_NAME} PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=2>)
+        target_compile_definitions(${APP_NAME}
+                PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=2>)
     elseif(CMAKE_BUILD_TYPE STREQUAL Release)
         appBuildLog("d" "Relase Mode!")
         target_compile_definitions(${APP_NAME} PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=0>)
