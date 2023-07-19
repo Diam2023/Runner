@@ -3,9 +3,11 @@
 //
 
 #include "MajorRole.h"
-#include "common.h"
-#include "utils/ImageAutoPolygon.h"
 #include "renderer/CCTexture2D.h"
+#include "AutoPolygonPhysicsSprite.h"
+#include "physics/CCPhysicsShape.h"
+
+#include "common.h"
 
 USING_NS_CC;
 
@@ -15,74 +17,20 @@ MajorRole* MajorRole::create(float sizeRatio, PhysicsMaterial roleMaterial)
     texture->initWithString("我",
                             app::fonts::FounderFont,
                             DefaultSize * sizeRatio);
-    auto tmpSprite = new (std::nothrow) Sprite();
-    if (!tmpSprite->initWithTexture(texture))
-    {
-        CCLOGERROR("Error Initialize TmpSprite!!!");
-        return nullptr;
-    }
-    tmpSprite->setAnchorPoint(Vec2::ZERO);
-    tmpSprite->autorelease();
-
-    // Create renderTexture
-    RenderTexture* tmpRender = RenderTexture::create(
-        static_cast<int>(tmpSprite->getContentSize().width),
-        static_cast<int>(tmpSprite->getContentSize().height),
-        backend::PixelFormat::RGBA8888);
-    tmpRender->autorelease();
-    tmpRender->setSprite(tmpSprite);
-    tmpRender->begin();
-    //! TODO Do not use This in Debug Draw Sprite
-    tmpSprite->visit();
-    tmpRender->end();
-
     auto role = new MajorRole();
-    role->setSizeRatio(sizeRatio);
-    role->setRoleMaterial(roleMaterial);
-    role->initWithTexture(texture);
-
-    tmpRender->createNewImage([role](Image* image) {
-        auto polygonInfo = ImageAutoPolygon::generatePolygon(image);
-        // TODO Rewrite This Code For Support PolygonSprite Bug
-        // First Thing Is Initialize With Info
-                 role->setPolygonInfo(polygonInfo);
-        //        role->updatePoly();
-        // TODO Rewrite initWithPolygon!!!
-        //        if (!role->initWithPolygon(polygonInfo))
-        //        {
-        //            CCLOGERROR("Error Initialize Role!!!");
-        //            return;
-        //        }
-
-        auto triangles = polygonInfo.triangles;
-        auto points = new Vec2[triangles.indexCount];
-        for (uint32_t i = 0; i < triangles.indexCount; ++i)
-        {
-            points[i].x = triangles.verts[triangles.indices[i]].vertices.x -
-                          role->getContentSize().width / 2;
-            points[i].y = triangles.verts[triangles.indices[i]].vertices.y -
-                          role->getContentSize().height / 2;
-        }
-
-        // Create A PhysicsBody
-
-        auto body =
-            PhysicsBody::createPolygon(points,
-                                       static_cast<int>(triangles.indexCount),
-                                       role->getRoleMaterial());
-        role->setPhysicsBody(body);
-        role->setVisible(true);
-        CC_SAFE_DELETE_ARRAY(points);
-        CC_SAFE_DELETE(image);
-    });
-
-    role->setVisible(false);
+    CCASSERT(role != nullptr, "Role Is Null!!!");
     role->autorelease();
+
+    role->setRatioSize(sizeRatio);
+    role->setRoleMaterial(roleMaterial);
+    role->init(texture);
+
     return role;
 }
 
-MajorRole::MajorRole() : sizeRatio(1)
+MajorRole::MajorRole() : AutoPolygonPhysicsSprite(), ratioSize(1)
 {
+    CCLOGINFO("Create MajorRole");
 }
 
 MajorRole::~MajorRole()
@@ -90,24 +38,14 @@ MajorRole::~MajorRole()
     CCLOGINFO("Destroy MajorRole");
 }
 
-float MajorRole::getSizeRatio() const
+float MajorRole::getRatioSize() const
 {
-    return sizeRatio;
+    return ratioSize;
 }
 
-void MajorRole::setSizeRatio(float sizeRatio_)
+void MajorRole::setRatioSize(float ratioSize_)
 {
-    MajorRole::sizeRatio = sizeRatio_;
-}
-
-const PhysicsMaterial& MajorRole::getRoleMaterial() const
-{
-    return roleMaterial;
-}
-
-void MajorRole::setRoleMaterial(const PhysicsMaterial& roleMaterial_)
-{
-    MajorRole::roleMaterial = roleMaterial_;
+    MajorRole::ratioSize = ratioSize_;
 }
 
 bool MajorRole::updateRoleMaterial()
@@ -118,4 +56,5 @@ bool MajorRole::updateRoleMaterial()
     {
         return false;
     }
+    return true;
 }

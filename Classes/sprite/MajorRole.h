@@ -3,33 +3,20 @@
 //
 #pragma once
 
-#include "cocos2d.h"
+#include "AutoPolygonPhysicsSprite.h"
 
-#include <string>
-
-class MajorRole final : public cocos2d::Sprite
+class MajorRole final : public AutoPolygonPhysicsSprite
 {
   protected:
-
     /**
      * Ratio of Role size
      */
-    float sizeRatio;
+    float ratioSize;
 
-    /**
-     * Role Material
-     */
-    cocos2d::PhysicsMaterial roleMaterial;
-  public:
-    // get And Setter
-    const cocos2d::PhysicsMaterial& getRoleMaterial() const;
-    void setRoleMaterial(const cocos2d::PhysicsMaterial&);
-
-    float getSizeRatio() const;
-    void setSizeRatio(float);
+    float getRatioSize() const;
+    void setRatioSize(float);
 
   public:
-
     /**
      * Default Of Font Size
      */
@@ -44,7 +31,9 @@ class MajorRole final : public cocos2d::Sprite
      * @param roleMaterial
      * @return
      */
-    static MajorRole* create(float sizeRatio = 1, cocos2d::PhysicsMaterial roleMaterial = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+    static MajorRole* create(float sizeRatio = 1,
+                             cocos2d::PhysicsMaterial roleMaterial =
+                                 cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
 
     /**
      * update RoleMaterial
