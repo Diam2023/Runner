@@ -57,3 +57,7 @@ cmake --build . --target Runner --config Debug -j 10
     - [ ] 開始菜單
     - [ ] 游戲界面
     - [ ] 結束界面
+
+## 目前進度
+- [x] 完成多邊形物理精靈創建
+- [ ] 完成行走界面
