@@ -12,7 +12,7 @@ namespace app
 {
 namespace fonts
 {
-static const std::string FounderFont = "fonts/QingNiaoHuaGuangJianMeiHei-2.ttf";
+static const std::string FounderFont = "fonts/SourceHanSansCN-Normal.otf";
 }
 namespace lan
 {
