@@ -1,12 +1,14 @@
 # 跑者
-/// 不知道怎麽命名好www 先這樣吧
+
 ---
+
+
+
 靈感來源于Ava做的游戲：[一周內做了，山寨版地鐵跑酷 | Unity 遊戲開發](https://www.youtube.com/watch?v=0tItdC1xwcM&list=PLKcM8_6ZrNaSlWq2FbU716_jNLSe5cqd8)
 
 Ava的頻道[@AvaLab](https://www.youtube.com/@AvaLab)
 
-因爲3D對於我這個專業不對口的初學者來説有點困難 www~~
-所以我使用2D
+我先從2D開始
 
 ---
 
