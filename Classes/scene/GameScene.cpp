@@ -5,12 +5,8 @@
 #include "GameScene.h"
 
 #include "sprite/MajorRole.h"
-#include "utils/ImageAutoPolygon.h"
 
 USING_NS_CC;
-
-
-const int DRAG_BODYS_TAG = 0x80;
 
 cocos2d::Scene* GameScene::createScene()
 {
