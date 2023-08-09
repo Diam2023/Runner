@@ -64,7 +64,7 @@ endfunction()
 #    FetchContent_Declare(
 #            "cocos2d-x"
 #            GIT_REPOSITORY "https://github.com/monoliths-uni/cocos2d-x.git"
-#            SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/coco2d-x"
+#            SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cocos2d-x"
 #            GIT_TAG "origin/v4"
 #            CONFIGURE_COMMAND ""
 #            BUILD_COMMAND ""
@@ -95,8 +95,6 @@ else()
         appBuildLog("i" "Cocos Path Error '$ENV{COCOS_HOME}', Has Not Cmake And cocos source code! ")
     endif()
 endif()
-
-
 
 # 使用LEGACY
 if (NOT DEFINED OpenGL_GL_PREFERENCE)
@@ -197,14 +195,13 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
-remove_definitions(-DCOCOS2D_DEBUG)
 if (DEFINED CMAKE_BUILD_TYPE)
     if (CMAKE_BUILD_TYPE STREQUAL Debug)
         appBuildLog("i" "Debug Mode!")
         target_compile_definitions(${APP_NAME}
                 PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=2>)
     elseif(CMAKE_BUILD_TYPE STREQUAL Release)
-        appBuildLog("d" "Relase Mode!")
+        appBuildLog("i" "Relase Mode!")
         target_compile_definitions(${APP_NAME} PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=0>)
     endif()
 endif()

@@ -26,12 +26,7 @@
 
 #include "scene/MenuScene.h"
 
-// #define USE_AUDIO_ENGINE 1
-
-#if USE_AUDIO_ENGINE
 #include "audio/include/AudioEngine.h"
-using namespace cocos2d::experimental;
-#endif
 
 USING_NS_CC;
 
@@ -40,15 +35,11 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
-AppDelegate::AppDelegate()
-{
-}
+AppDelegate::AppDelegate() = default;
 
 AppDelegate::~AppDelegate()
 {
-#if USE_AUDIO_ENGINE
     AudioEngine::end();
-#endif
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -130,9 +121,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
 
-#if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
-#endif
 }
 
 // this function will be called when the app is active again
@@ -140,7 +129,5 @@ void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
 
-#if USE_AUDIO_ENGINE
     AudioEngine::resumeAll();
-#endif
 }
