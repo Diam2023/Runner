@@ -1,5 +1,6 @@
 *build*
 coco2d-x
-proj.android
+#proj.android
+#proj.linux
 proj.ios_mac
 
