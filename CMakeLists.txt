@@ -49,10 +49,30 @@ set(BUILD_MESSAGE_TAG "${APP_NAME} BUILD: ")
 function(appBuildLog l m)
     if (l STREQUAL e)
         message(FATAL_ERROR ${BUILD_MESSAGE_TAG} ${m})
+    elseif (l STREQUAL w)
+        message(${BUILD_MESSAGE_TAG} ${m})
     else()
         message(${BUILD_MESSAGE_TAG} ${m})
     endif()
 endfunction()
+
+#include(FetchContent)
+#
+#function(makeCocos)
+#    appBuildLog("i" "Starting to clone cocos2d-x into ${CMAKE_CURRENT_SOURCE_DIR}/coco2d-x")
+#    # start clone cocos2d-x
+#    FetchContent_Declare(
+#            "cocos2d-x"
+#            GIT_REPOSITORY "https://github.com/monoliths-uni/cocos2d-x.git"
+#            SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/coco2d-x"
+#            GIT_TAG "origin/v4"
+#            CONFIGURE_COMMAND ""
+#            BUILD_COMMAND ""
+#            INSTALL_COMMAND ""
+#    )
+#    FetchContent_MakeAvailable(cocos2d-x)
+#endfunction()
+#makeCocos()
 
 # add build type debug
 if (DEFINED CMAKE_BUILD_TYPE)
@@ -66,7 +86,8 @@ endif()
 
 if (NOT DEFINED ENV{COCOS_HOME})
     # 必須先定義Cocos路徑
-    appBuildLog("e" "Cocos Env{COCOS_HOME} Not Define!!! Please Read README.MD!")
+    appBuildLog("w" "Cocos Env{COCOS_HOME} Not Define!!! Please Read README.MD!")
+#    makeCocos()
 else()
     if (EXISTS $ENV{COCOS_HOME} AND EXISTS $ENV{COCOS_HOME}/cocos AND EXISTS $ENV{COCOS_HOME}/cmake)
         appBuildLog("i" "Find COCOS_HOME With '$ENV{COCOS_HOME}'")
