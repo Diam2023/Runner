@@ -1,4 +1,18 @@
+
+var home = System.getenv("COCOS_HOME")
+var path = '/cocos/platform/android/libcocos2dx'
+
+if (!home.empty)
+{
+    System.out.println("find cocos_home: " + home)
+} else {
+    System.out.println("COCOS_HOME Not found!!!")
+}
+
+var fullPath = home + path
+System.out.println(fullPath)
+
 include ':libcocos2dx'
-project(':libcocos2dx').projectDir = new File(settingsDir, '../cocos2d/cocos/platform/android/libcocos2dx')
+project(':libcocos2dx').projectDir = new File(fullPath)
 include ':Runner'
 project(':Runner').projectDir = new File(settingsDir, 'app')
